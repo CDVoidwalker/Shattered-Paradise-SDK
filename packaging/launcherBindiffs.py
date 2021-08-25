@@ -19,7 +19,7 @@ def do_bsdiff(url, newfile):
 
     urllib.request.urlretrieve(asset.browser_download_url, oldfile)
     update = "update-" + newfile
-    downgrade = "downgrade" + newfile
+    downgrade = "downgrade-" + newfile
 
     os.system("bsdiff " + oldfile + " " + newfile + " " + update)
     os.system("bsdiff " + newfile + " " + oldfile + " " + downgrade)
@@ -67,6 +67,9 @@ winx86newfile = os.environ[OUTPUTDIR] + "/" + \
     "-" + tag + "-" + "x86-winportable.zip"
 
 for asset in assets:
+    if "update" in asset.browser_download_url or "downgrade" in asset.browser_download_url:
+        continue
+
     if system == "linux":
         if "AppImage" in asset.browser_download_url and os.path.isfile(linuxnewfile):
             do_bsdiff(asset.browser_download_url, linuxnewfile)
