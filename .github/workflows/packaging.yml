@@ -31,7 +31,7 @@ jobs:
       - name: Create BinDiffs
         run: |
           echo "Fetching bsdiff"
-          apt install bsdiff
+          sudo apt install bsdiff
           echo "Creating bindiffs for launcher"
           python3 ./packaging/launcherBindiffs.py "-s linux -t ${GIT_TAG} -o ${PWD}/build/linux -r ABrandau/Shattered-Paradise-SDK"
 
@@ -75,7 +75,7 @@ jobs:
       - name: Create BinDiffs
         run: |
           echo "Fetching bsdiff"
-          apt install bsdiff
+          sudo apt install bsdiff
           echo "Creating bindiffs for launcher"
           python3 ./packaging/launcherBindiffs.py "-s macos -t ${GIT_TAG} -o ${PWD}/build/macos -r ABrandau/Shattered-Paradise-SDK"
 
@@ -116,7 +116,7 @@ jobs:
       - name: Create BinDiffs
         run: |
           echo "Fetching bsdiff"
-          apt install bsdiff
+          sudo apt install bsdiff
           echo "Creating bindiffs for launcher"
           python3 ./packaging/launcherBindiffs.py "-s windows -t ${GIT_TAG} -o ${PWD}/build/windows -r ABrandau/Shattered-Paradise-SDK"
 
