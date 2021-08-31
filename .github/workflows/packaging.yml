@@ -32,6 +32,8 @@ jobs:
         run: |
           echo "Fetching bsdiff"
           sudo apt install bsdiff
+          echo "Fetching PyGithub for python"
+          pip install PyGithub
           echo "Creating bindiffs for launcher"
           python3 ./packaging/launcherBindiffs.py "-s linux -t ${GIT_TAG} -o ${PWD}/build/linux -r ABrandau/Shattered-Paradise-SDK"
 
@@ -76,6 +78,8 @@ jobs:
         run: |
           echo "Fetching bsdiff"
           sudo apt install bsdiff
+          echo "Fetching PyGithub for python"
+          pip install PyGithub
           echo "Creating bindiffs for launcher"
           python3 ./packaging/launcherBindiffs.py "-s macos -t ${GIT_TAG} -o ${PWD}/build/macos -r ABrandau/Shattered-Paradise-SDK"
 
@@ -117,6 +121,8 @@ jobs:
         run: |
           echo "Fetching bsdiff"
           sudo apt install bsdiff
+          echo "Fetching PyGithub for python"
+          pip install PyGithub
           echo "Creating bindiffs for launcher"
           python3 ./packaging/launcherBindiffs.py "-s windows -t ${GIT_TAG} -o ${PWD}/build/windows -r ABrandau/Shattered-Paradise-SDK"
 
