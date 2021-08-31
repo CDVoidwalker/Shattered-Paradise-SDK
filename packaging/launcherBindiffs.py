@@ -52,8 +52,6 @@ g = Github()
 repo = g.get_repo(repository)
 assets = repo.get_latest_release().get_assets()
 
-os.path.isfile(path)
-
 linuxnewfile = os.environ[OUTPUTDIR] + "/" + \
     os.environ[PACKAGING_INSTALLER_NAME] + "-" + tag + "-x86_64.AppImage"
 macoscompatnewfile = os.environ[OUTPUTDIR] + "/" + \
