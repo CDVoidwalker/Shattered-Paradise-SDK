@@ -47,7 +47,7 @@ for opt, arg in opts:
         repository = arg
 
 with open('mod.config') as file:
-        packaging_installer_name = [line for line in file if line.startswith("PACKAGING_INSTALLER_NAME")].split('=')[1]
+        packaging_installer_name = [line for line in file if line.startswith("PACKAGING_INSTALLER_NAME")][0].split('=')[1]
 
 print("Getting latest release")
 g = Github()
