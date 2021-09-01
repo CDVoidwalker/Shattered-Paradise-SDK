@@ -13,20 +13,27 @@ winplatform = ''
 repository = ''
 packaging_installer_name = ''
 
+
 def do_bsdiff(url, newfile):
     # gets filename from url
     idx = asset.browser_download_url.rfind('/')
-    oldfile = outputdir + asset.browser_download_url[idx:]
+    oldfile = outputdir + '/' + asset.browser_download_url[idx:]
 
     urllib.request.urlretrieve(asset.browser_download_url, oldfile)
     update = "update-" + newfile
     downgrade = "downgrade-" + newfile
 
-    os.system("bsdiff " + oldfile + " " + newfile + " " + update)
-    os.system("bsdiff " + newfile + " " + oldfile + " " + downgrade)
+    updateCommand = "bsdiff " + oldfile + " " + newfile + " " + update
+    downgradeCommand = "bsdiff " + newfile + " " + oldfile + " " + downgrade
+
+    print("Calling bsdiff with \'" + updateCommand + "\'")
+    os.system(updateCommand)
+    print("Calling bsdiff with \'" + downgradeCommand + "\'")
+    os.system(downgradeCommand)
 
     os.remove(oldfile)
     pass
+
 
 try:
     opts, args = getopt.getopt(sys.argv[1:], "s:t:o:r:", [
@@ -47,18 +54,23 @@ for opt, arg in opts:
         repository = arg
 
 with open('mod.config') as file:
-        packaging_installer_name = [line for line in file if line.startswith("PACKAGING_INSTALLER_NAME")][0].split('=')[1]
+    packaging_installer_name = [line for line in file if line.startswith(
+        "PACKAGING_INSTALLER_NAME")][0].split('=')[1]
 
 print("Getting latest release")
 g = Github()
 repo = g.get_repo(repository)
 assets = repo.get_latest_release().get_assets()
 
-linuxnewfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-x86_64.AppImage"
-macoscompatnewfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-compat.dmg"
+linuxnewfile = outputdir + "/" + \
+    packaging_installer_name + "-" + tag + "-x86_64.AppImage"
+macoscompatnewfile = outputdir + "/" + \
+    packaging_installer_name + "-" + tag + "-compat.dmg"
 macosnewfile = outputdir + "/" + packaging_installer_name + "-" + tag + ".dmg"
-winx64newfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-" + "x64-winportable.zip"
-winx86newfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-" + "x86-winportable.zip"
+winx64newfile = outputdir + "/" + packaging_installer_name + \
+    "-" + tag + "-" + "x64-winportable.zip"
+winx86newfile = outputdir + "/" + packaging_installer_name + \
+    "-" + tag + "-" + "x86-winportable.zip"
 
 for asset in assets:
     if "update" in asset.browser_download_url or "downgrade" in asset.browser_download_url:
