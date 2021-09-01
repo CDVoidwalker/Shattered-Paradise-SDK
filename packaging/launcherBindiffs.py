@@ -52,18 +52,11 @@ g = Github()
 repo = g.get_repo(repository)
 assets = repo.get_latest_release().get_assets()
 
-linuxnewfile = os.environ[OUTPUTDIR] + "/" + \
-    os.environ[PACKAGING_INSTALLER_NAME] + "-" + tag + "-x86_64.AppImage"
-macoscompatnewfile = os.environ[OUTPUTDIR] + "/" + \
-    os.environ[PACKAGING_INSTALLER_NAME] + "-" + tag + "-compat.dmg"
-macosnewfile = os.environ[OUTPUTDIR] + "/" + \
-    os.environ[PACKAGING_INSTALLER_NAME] + "-" + tag + ".dmg"
-winx64newfile = os.environ[OUTPUTDIR] + "/" + \
-    os.environ[PACKAGING_INSTALLER_NAME] + \
-    "-" + tag + "-" + "x64-winportable.zip"
-winx86newfile = os.environ[OUTPUTDIR] + "/" + \
-    os.environ[PACKAGING_INSTALLER_NAME] + \
-    "-" + tag + "-" + "x86-winportable.zip"
+linuxnewfile = outputdir + "-" + tag + "-x86_64.AppImage"
+macoscompatnewfile = outputdir + "-" + tag + "-compat.dmg"
+macosnewfile = outputdir + "-" + tag + ".dmg"
+winx64newfile = outputdir + "-" + tag + "-" + "x64-winportable.zip"
+winx86newfile = outputdir + "-" + tag + "-" + "x86-winportable.zip"
 
 for asset in assets:
     if "update" in asset.browser_download_url or "downgrade" in asset.browser_download_url:
