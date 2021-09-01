@@ -11,7 +11,7 @@ tag = ''
 outputdir = ''
 winplatform = ''
 repository = ''
-
+packaging_installer_name = ''
 
 def do_bsdiff(url, newfile):
     # gets filename from url
@@ -27,7 +27,6 @@ def do_bsdiff(url, newfile):
 
     os.remove(oldfile)
     pass
-
 
 try:
     opts, args = getopt.getopt(sys.argv[1:], "s:t:o:r:", [
@@ -47,16 +46,19 @@ for opt, arg in opts:
     elif opt in ("-r", "--repository"):
         repository = arg
 
+with open('mod.config') as file:
+        packaging_installer_name = [line for line in file if line.startswith("PACKAGING_INSTALLER_NAME")].split('=')[1]
+
 print("Getting latest release")
 g = Github()
 repo = g.get_repo(repository)
 assets = repo.get_latest_release().get_assets()
 
-linuxnewfile = outputdir + "/" + os.environ["PACKAGING_INSTALLER_NAME"] + "-" + tag + "-x86_64.AppImage"
-macoscompatnewfile = outputdir + "/" + os.environ["PACKAGING_INSTALLER_NAME"] + "-" + tag + "-compat.dmg"
-macosnewfile = outputdir + "/" + os.environ["PACKAGING_INSTALLER_NAME"] + "-" + tag + ".dmg"
-winx64newfile = outputdir + "/" + os.environ["PACKAGING_INSTALLER_NAME"] + "-" + tag + "-" + "x64-winportable.zip"
-winx86newfile = outputdir + "/" + os.environ["PACKAGING_INSTALLER_NAME"] + "-" + tag + "-" + "x86-winportable.zip"
+linuxnewfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-x86_64.AppImage"
+macoscompatnewfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-compat.dmg"
+macosnewfile = outputdir + "/" + packaging_installer_name + "-" + tag + ".dmg"
+winx64newfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-" + "x64-winportable.zip"
+winx86newfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-" + "x86-winportable.zip"
 
 for asset in assets:
     if "update" in asset.browser_download_url or "downgrade" in asset.browser_download_url:
