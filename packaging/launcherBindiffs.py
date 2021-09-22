@@ -72,7 +72,7 @@ winx86newfile = outputdir + "/" + packaging_installer_name + "-" + tag + "-" + "
 print("Scanning assets:")
 for asset in assets:
     print(asset.browser_download_url)
-    if "update" in asset.browser_download_url or "downgrade" in asset.browser_download_url:
+    if ".update" in asset.browser_download_url or ".downgrade" in asset.browser_download_url:
         print("Skipping")
         continue
 
